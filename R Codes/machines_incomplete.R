@@ -47,5 +47,18 @@ library(lme4)
 machines.lmer.1 <- lmer(score ~ Machine + (1 | Worker), data=machines.df)
 machines.lmer.1
 machines.lmer.3 <- lmer(score ~ Machine + (Machine - 1 | Worker), data=machines.df)
-machines.lmer.3  # leicht andere Standardabweichungs-Schaetzer als mit lme
+machines.lmer.3  # slightly different estimate of sd compared to lme
 detach(package:lme4)
+
+
+# two-level model - less general interaction
+machines.lme.2 <- lme(score ~ Machine, random = ~ 1 | Worker/Machine, data=machines.df)
+# equivalent:     lme(score ~ Machine, random = list(Worker = ~ 1, Machine = ~ 1), data=machines.df)
+machines.lme.2
+
+library(lme4)
+machines.lmer.2 <- lmer(score ~ Machine + (1 | Worker/Machine), data=machines.df)
+machines.lmer.2
+# or: lmer(score ~ Machine + (1 | Worker) + (1 | Machine:Worker), data=machines.df)
+detach(package:lme4)
+

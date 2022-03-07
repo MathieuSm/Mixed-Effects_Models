@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   sodipodi:docname="OatsModel.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#999999"
+     borderopacity="1"
+     inkscape:pageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="0.94867184"
+     inkscape:cx="366.30159"
+     inkscape:cy="84.328423"
+     inkscape:window-width="1620"
+     inkscape:window-height="1010"
+     inkscape:window-x="-6"
+     inkscape:window-y="-6"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Calque 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <text
+       xml:space="preserve"
+       style="font-size:6.34998px;line-height:1.25;font-family:Norasi;-inkscape-font-specification:'Norasi, Normal';font-variant-ligatures:none;stroke-width:0.264582"
+       x="30.894882"
+       y="14.343362"
+       id="text2120"
+       inkscape:export-filename="C:\Users\mathi\OneDrive\Documents\PhD\03_Lectures\Mixed-Effects Models\Exercises\Images\OatsModel.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96"><tspan
+         sodipodi:role="line"
+         id="tspan2118"
+         style="stroke-width:0.264582"
+         x="30.894882"
+         y="14.343362">Level 1: Blocks | M = 6</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:6.35px;line-height:1.25;font-family:Norasi;-inkscape-font-specification:'Norasi, Normal';font-variant-ligatures:none;stroke-width:0.264583"
+       x="29.202795"
+       y="34.337055"
+       id="text2120-2"
+       inkscape:export-filename="C:\Users\mathi\OneDrive\Documents\PhD\03_Lectures\Mixed-Effects Models\Exercises\Images\OatsModel.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96"><tspan
+         sodipodi:role="line"
+         id="tspan2118-3"
+         style="stroke-width:0.264583"
+         x="29.202795"
+         y="34.337055">Level 2: Variety | M<tspan
+   style="font-size:65%;baseline-shift:sub"
+   id="tspan5613">i</tspan> = 3</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:6.35px;line-height:1.25;font-family:Norasi;-inkscape-font-specification:'Norasi, Normal';font-variant-ligatures:none;stroke-width:0.264583"
+       x="8.9958"
+       y="54.337051"
+       id="text2120-2-4"
+       inkscape:export-filename="C:\Users\mathi\OneDrive\Documents\PhD\03_Lectures\Mixed-Effects Models\Exercises\Images\OatsModel.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96"><tspan
+         sodipodi:role="line"
+         id="tspan2118-3-9"
+         style="stroke-width:0.264583"
+         x="8.9958"
+         y="54.337051">Measurements: Nitrogen | n<tspan
+   style="font-size:65%;baseline-shift:sub"
+   id="tspan5613-5">ij</tspan> = 4</tspan></text>
+    <circle
+       style="fill:none;stroke:#000000;stroke-width:0.522371;stroke-miterlimit:2;stroke-opacity:1"
+       id="path11501"
+       cx="145"
+       cy="12.219"
+       r="4.7388144"
+       inkscape:export-filename="C:\Users\mathi\OneDrive\Documents\PhD\03_Lectures\Mixed-Effects Models\Exercises\Images\OatsModel.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <circle
+       style="fill:none;stroke:#000000;stroke-width:0.522371;stroke-miterlimit:2;stroke-opacity:1"
+       id="path11501-0"
+       cx="145"
+       cy="32.218998"
+       r="4.7388144"
+       inkscape:export-filename="C:\Users\mathi\OneDrive\Documents\PhD\03_Lectures\Mixed-Effects Models\Exercises\Images\OatsModel.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <circle
+       style="fill:none;stroke:#000000;stroke-width:0.522371;stroke-miterlimit:2;stroke-opacity:1"
+       id="path11501-0-8"
+       cx="125"
+       cy="32.218998"
+       r="4.7388144"
+       inkscape:export-filename="C:\Users\mathi\OneDrive\Documents\PhD\03_Lectures\Mixed-Effects Models\Exercises\Images\OatsModel.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <circle
+       style="fill:none;stroke:#000000;stroke-width:0.522371;stroke-miterlimit:2;stroke-opacity:1"
+       id="path11501-0-2"
+       cx="165"
+       cy="32.218998"
+       r="4.7388144"
+       inkscape:export-filename="C:\Users\mathi\OneDrive\Documents\PhD\03_Lectures\Mixed-Effects Models\Exercises\Images\OatsModel.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <circle
+       style="fill:none;stroke:#000000;stroke-width:0.522371;stroke-miterlimit:2;stroke-opacity:1"
+       id="path11501-7"
+       cx="115"
+       cy="52.218998"
+       r="4.7388144"
+       inkscape:export-filename="C:\Users\mathi\OneDrive\Documents\PhD\03_Lectures\Mixed-Effects Models\Exercises\Images\OatsModel.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <circle
+       style="fill:none;stroke:#000000;stroke-width:0.522371;stroke-miterlimit:2;stroke-opacity:1"
+       id="path11501-7-2"
+       cx="135"
+       cy="52.218998"
+       r="4.7388144"
+       inkscape:export-filename="C:\Users\mathi\OneDrive\Documents\PhD\03_Lectures\Mixed-Effects Models\Exercises\Images\OatsModel.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <circle
+       style="fill:none;stroke:#000000;stroke-width:0.522371;stroke-miterlimit:2;stroke-opacity:1"
+       id="path11501-7-3"
+       cx="155"
+       cy="52.218998"
+       r="4.7388144"
+       inkscape:export-filename="C:\Users\mathi\OneDrive\Documents\PhD\03_Lectures\Mixed-Effects Models\Exercises\Images\OatsModel.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <circle
+       style="fill:none;stroke:#000000;stroke-width:0.522371;stroke-miterlimit:2;stroke-opacity:1"
+       id="path11501-7-2-0"
+       cx="175"
+       cy="52.218998"
+       r="4.7388144"
+       inkscape:export-filename="C:\Users\mathi\OneDrive\Documents\PhD\03_Lectures\Mixed-Effects Models\Exercises\Images\OatsModel.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.265;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 141.84997,15.426024 128.12396,29.057372"
+       id="path11744"
+       inkscape:export-filename="C:\Users\mathi\OneDrive\Documents\PhD\03_Lectures\Mixed-Effects Models\Exercises\Images\OatsModel.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.265;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 148.20782,15.720222 13.35576,13.263647"
+       id="path11744-2"
+       inkscape:export-filename="C:\Users\mathi\OneDrive\Documents\PhD\03_Lectures\Mixed-Effects Models\Exercises\Images\OatsModel.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 144.9576,17.01282 -1e-5,10.388977"
+       id="path11881"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="C:\Users\mathi\OneDrive\Documents\PhD\03_Lectures\Mixed-Effects Models\Exercises\Images\OatsModel.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 142.28678,36.141857 -5.31574,11.785148"
+       id="path12209"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="C:\Users\mathi\OneDrive\Documents\PhD\03_Lectures\Mixed-Effects Models\Exercises\Images\OatsModel.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 147.21706,36.462325 5.58691,11.587936"
+       id="path12209-2"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="C:\Users\mathi\OneDrive\Documents\PhD\03_Lectures\Mixed-Effects Models\Exercises\Images\OatsModel.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 149.19023,34.807768 21.89045,14.593626"
+       id="path12963"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="C:\Users\mathi\OneDrive\Documents\PhD\03_Lectures\Mixed-Effects Models\Exercises\Images\OatsModel.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 140.90737,34.413346 118.72111,49.204184"
+       id="path12965"
+       sodipodi:nodetypes="cc"
+       inkscape:export-filename="C:\Users\mathi\OneDrive\Documents\PhD\03_Lectures\Mixed-Effects Models\Exercises\Images\OatsModel.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 120.20533,32.212798 -12.41099,5.159626"
+       id="path13217"
+       inkscape:export-filename="C:\Users\mathi\OneDrive\Documents\PhD\03_Lectures\Mixed-Effects Models\Exercises\Images\OatsModel.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 121.32093,35.559582 -7.25137,6.55412"
+       id="path13219"
+       inkscape:export-filename="C:\Users\mathi\OneDrive\Documents\PhD\03_Lectures\Mixed-Effects Models\Exercises\Images\OatsModel.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 124.24937,36.954076 -1.1156,6.275221"
+       id="path13221"
+       inkscape:export-filename="C:\Users\mathi\OneDrive\Documents\PhD\03_Lectures\Mixed-Effects Models\Exercises\Images\OatsModel.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 128.0145,36.117379 0.83669,4.18348"
+       id="path13223"
+       inkscape:export-filename="C:\Users\mathi\OneDrive\Documents\PhD\03_Lectures\Mixed-Effects Models\Exercises\Images\OatsModel.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 169.81905,32.192574 182.23004,37.3522"
+       id="path13217-0"
+       inkscape:export-filename="C:\Users\mathi\OneDrive\Documents\PhD\03_Lectures\Mixed-Effects Models\Exercises\Images\OatsModel.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 168.70345,35.539358 7.25137,6.55412"
+       id="path13219-8"
+       inkscape:export-filename="C:\Users\mathi\OneDrive\Documents\PhD\03_Lectures\Mixed-Effects Models\Exercises\Images\OatsModel.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 165.77501,36.933852 1.1156,6.275221"
+       id="path13221-9"
+       inkscape:export-filename="C:\Users\mathi\OneDrive\Documents\PhD\03_Lectures\Mixed-Effects Models\Exercises\Images\OatsModel.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 162.00988,36.097155 -0.83669,4.18348"
+       id="path13223-3"
+       inkscape:export-filename="C:\Users\mathi\OneDrive\Documents\PhD\03_Lectures\Mixed-Effects Models\Exercises\Images\OatsModel.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96" />
+  </g>
+</svg>
