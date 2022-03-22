@@ -1,39 +1,64 @@
-require(mgcv)
-library(nlme)
-
-Machines.df <- data.frame(Machines)
-Machines.lme1 <- lme(score ~ Machine, random = ~ 1 | Worker, data=Machines.df)
-Machines.lme2 <- lme(score ~ Machine, random = ~ 1 | Worker/Machine, data=Machines.df)
-Machines.lme3 <- lme(score ~ Machine, random = ~ Machine - 1 | Worker, data=Machines.df)
-
-summary(Machines.lme1)
-VarCorr(Machines.lme1)
-VarY.lme1 = extract.lme.cov(Machines.lme1)
-VarY.lme2 = extract.lme.cov(Machines.lme2)
-VarY.lme3 = extract.lme.cov(Machines.lme3)
-
-Worker1 = c(as.numeric(rownames(Machines.df[Machines.df$Worker == 1, ])))
-VarY.lme1[Worker1,Worker1]
-
-extract.lme.cov2(Machines.lme1)
-VarCorr(Machines.lme1)
-
-extract.lme.cov2(Machines.lme2)
-VarCorr(Machines.lme2)
-
-extract.lme.cov2(Machines.lme3)
-VarCorr(Machines.lme3)
-
-
-
 library(lme4)
-Machines.lmer1 <- lmer(score ~ Machine + ( 1 | Worker ), data=Machines.df)
-Machines.lmer2 <- lmer(score ~ Machine + ( 1 | Worker/Machine ), data=Machines.df)
-Machines.lmer3 <- lmer(score ~ Machine + ( Machine - 1 | Worker ), data=Machines.df)
 
-Z = getME(Machines.lmer1, name = 'Z')
-X = getME(Machines.lmer1, name= 'X')
+# Example 2.12
+Machines.df <- data.frame(Machines)
+plot(Machines.df)
 
-getME(Machines.lmer3, name= 'm_i')
+Machines.lmer <- lmer(score ~ Machine + ( 1 | Worker/Machine ), data=Machines.df)
 
-summary(Machines.lmer3)
+# To see the number of parameters
+X = getME(Machines.lmer, name = 'X')
+
+library(nlme)
+Machines.lme <- lme(score ~ Machine, random = ~ 1 | Worker/Machine, data=Machines.df)
+summary(Machines.lme)
+anova(Machines.lme, type='marginal')
+
+intervals(Machines.lme)
+
+
+# Exercise 1
+Oats.df <- data.frame(Oats)
+Oats.df$Block <- factor(as.character(Oats.df$Block))
+
+plot(Oats.df)
+
+Oats.lme1 <- lme(yield ~ ordered(nitro) * Variety, random = ~1|Block/Variety, data=Oats.df)
+Oats.lme2 <- lme(yield ~ ordered(nitro) + Variety, random = ~1|Block/Variety, data=Oats.df)
+Oats.lme3 <- lme(yield ~ ordered(nitro), random = ~1|Block/Variety, data=Oats.df)
+Oats.lme4 <- lme(yield ~ nitro, random = ~1|Block/Variety, data=Oats.df)
+Oats.lme4.0 <- lme(yield ~ nitro, random = ~1|Block, data=Oats.df)
+
+
+anova(Oats.lme4.0)
+
+intervals(Oats.lme4)
+
+73.666666666 - qt(1-0.05/2, 53) * 6.781485
+
+2*(-296.52 - (- 302.35))
+anova(Oats.lme4, Oats.lme4.0)
+
+
+Oats.lmer1 <- lmer(yield ~ ordered(nitro) * Variety + (1|Block/Variety), data=Oats.df)
+anova(Oats.lmer1)
+
+
+# To see the number of parameters
+X = getME(Oats.lmer1, name = 'X')
+matrix(X)
+
+
+# Exercise 2
+re4 = ranef(Oats.lme4)
+boxplot(re4$Block$`(Intercept)`)
+boxplot(re4$Variety$`(Intercept)`)
+qqnorm(Oats.lme4, ~resid(.)|Block)
+qqnorm(Oats.lme4, ~ranef(.,level = 2))
+
+re4.0 = ranef(Oats.lme4.0, augFrame = TRUE)
+boxplot(resid(Oats.lme4.0) ~ Oats.df$Block)
+boxplot(re4.0$'(Intercept)' ~ re4.0$Variety)
+qqnorm(Oats.lme4.0, ~resid(.)|Block)
+qqnorm(Oats.lme4.0, ~ranef(.))
+

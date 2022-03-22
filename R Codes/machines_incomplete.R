@@ -62,3 +62,94 @@ machines.lmer.2
 # or: lmer(score ~ Machine + (1 | Worker) + (1 | Machine:Worker), data=machines.df)
 detach(package:lme4)
 
+
+# LRT
+anova(machines.lme.1, machines.lme.2, machines.lme.3)
+
+library(lme4)
+anova(machines.lmer.1, machines.lmer.2, machines.lmer.3) # switches to ML estimation
+anova(machines.lmer.1, machines.lmer.2, machines.lmer.3, refit=FALSE)
+detach(package:lme4)
+
+anova(machines.lme.1, machines.lme.3) # direct comparison, not included above
+
+
+# conditional t and F tests
+summary(machines.lme.2)
+anova(machines.lme.2, type='marginal')
+anova(machines.lme.2)  # sequential
+
+# LRT for effects of Machine (not recommended)
+machines.lme.2.ml <- lme(score ~ Machine, random = ~ 1 | Worker/Machine, 
+  method='ML', data=machines.df)
+machines.lme.2.0.ml <- lme(score ~ 1, random = ~ 1 | Worker/Machine, 
+  method='ML', data=machines.df)
+anova(machines.lme.2.0.ml, machines.lme.2.ml)
+
+# conditional F test in the more general model
+anova(machines.lme.3)  # sequential
+
+
+# lme4 / lmerTest
+library(lme4)
+summary(machines.lmer.2)  # t statistics, but no degrees of freedom / p values
+library(lmerTest)
+# refit the model after loading lmerTest:
+machines.lmer.2 <- lmer(score ~ Machine + (1 | Worker/Machine), data=machines.df)
+summary(machines.lmer.2)  # df, p value added (Satterthwaite)
+summary(machines.lmer.2, ddf='Kenward-Roger')
+anova(machines.lmer.2)
+drop1(machines.lmer.2)
+machines.lmer.3 <- lmer(score ~ Machine + (Machine - 1 | Worker), data=machines.df)
+drop1(machines.lmer.3)
+drop1(machines.lmer.3, ddf='Kenward-Roger')
+detach(package:lmerTest)
+detach(package:lme4)
+
+
+
+
+# confidence intervals
+intervals(machines.lme.1)
+intervals(machines.lme.2)
+intervals(machines.lme.3)
+
+library(lme4)
+confint(machines.lmer.1)
+confint(machines.lmer.2)
+confint(machines.lmer.2, oldNames=FALSE) # easier to interpret
+confint(machines.lmer.3, oldNames=FALSE)
+confint(machines.lmer.3, method='Wald') # for fixed effects only
+confint(machines.lmer.3, method='boot')
+detach(package:lme4)
+
+
+
+# within-group residuals
+plot(machines.lme.1, Worker ~ resid(.), abline=0)
+boxplot(resid(machines.lme.1) ~ machines.df$Worker)
+abline(h=0)
+
+plot(machines.lme.1, Machine ~ resid(.) | Worker, abline=0)
+boxplot(resid(machines.lme.1) ~ machines.df$Worker * machines.df$Machine, cex.axis=0.7)
+abline(h=0)
+
+
+plot(machines.lme.1, resid(.) ~ fitted(.) | Machine, abline=0, grid=FALSE)
+
+
+
+
+# obtain the two-level model by restrictions on Psi
+
+VarCorr(machines.lme.2)
+
+machines.lme.2a <- lme(score ~ Machine, 
+  random = list(Worker = pdBlocked(list(pdIdent(~ 1), pdIdent(~ Machine - 1)))),
+  data=machines.df)
+VarCorr(machines.lme.2a)
+
+machines.lme.2b <- lme(score ~ Machine, 
+  random = list(Worker = pdCompSymm(~ Machine - 1)), data=machines.df)
+VarCorr(machines.lme.2b)
+
