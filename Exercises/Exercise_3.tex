@@ -1,0 +1,120 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{ragged2e}
+
+
+\renewcommand*{\thesection}{\hspace{-5mm}}
+\renewcommand*{\thesubsection}{(\alph{subsection})}
+
+\setlength{\parindent}{0em}
+
+\definecolor{Red}{RGB}{255, 0, 0}
+\definecolor{Blue}{RGB}{0, 0, 255}
+
+\begin{document}
+	
+	\title{Mixed-Effects Models, Spring 2022}
+	\author{Mathieu Simon}
+	\maketitle
+	
+	\setlength{\parskip}{1em}
+	
+	\section{Exercise 1}
+	
+	\subsection{}
+	
+	As in the Example 2.20 of the lecture notes, we can make use of the fact that \textit{Block} (1\textsuperscript{st}-level random factor) is always observed with \textit{sample} and \textit{dilut} (2\textsuperscript{nd}-level random factor). Therefore we can define:\\
+	
+	$ \mathbf{Z}_i^* = 
+	\begin{bmatrix}
+		\mathbf{Z}_{br1} & \mathbf{0} & \mathbf{0} & \mathbf{0} & \mathbf{0} & \mathbf{0} \\
+		\mathbf{0} & ... & \mathbf{0} & \mathbf{0} & \mathbf{0} & \mathbf{0}\\
+		\mathbf{0} & \mathbf{0} & \mathbf{Z}_{br6} & \mathbf{0} & \mathbf{0} & \mathbf{0} \\
+		\mathbf{0} & \mathbf{0} & \mathbf{0} & \mathbf{Z}_{bc1} & \mathbf{0} & \mathbf{0} \\
+		\mathbf{0} & \mathbf{0} & \mathbf{0} & \mathbf{0} & ... & \mathbf{0} \\
+		\mathbf{0} & \mathbf{0} & \mathbf{0} & \mathbf{0} & \mathbf{0} & \mathbf{Z}_{bc5} \\
+	\end{bmatrix}, 
+	\mathbf{b}_i^* =
+	\begin{bmatrix}
+		b_i + r_{i1} \\
+		b_i + r_{i2} \\
+		b_i + r_{i3} \\
+		b_i + r_{i4} \\
+		b_i + r_{i5} \\
+		b_i + r_{i6} \\
+		b_i + c_{i1} \\
+		b_i + c_{i2} \\
+		b_i + c_{i3} \\
+		b_i + c_{i4} \\
+		b_i + c_{i5} \\
+	\end{bmatrix}, 
+	\mathbf{\Psi}^* = 
+	\begin{bmatrix}
+		\sigma_1^2 + \sigma_2^2 \mathbf{I}_6 & \sigma_1^2 \\
+		\sigma_1^2 & \sigma_1^2 + \sigma_3^2 \mathbf{I}_5
+	\end{bmatrix}$
+	
+	\newpage
+	\subsection{}
+	\subsubsection*{assay.lme.2b}
+	\begin{lstlisting}[language=R]
+lme(logDens ~ sample*dilut, 
+random = list(Block = pdBlocked(
+list(pdCompSymm(~ dilut - 1), pdCompSymm(~ sample - 1)))),
+data=Assay.df)
+	\end{lstlisting}
+
+	\subsection{}
+	\subsubsection*{assay.lme.3}
+	\begin{lstlisting}[language=R]
+lme(logDens ~ sample * dilut, 
+random = list(Block = pdBlocked(
+list(pdIdent(~ 1), pdIdent(~ sample - 1), 
+     pdIdent(~ dilut - 1)))),
+weights = varIdent(form = ~ 1 | sample * dilut),
+data=Assay.df)
+	\end{lstlisting}
+
+	The variance for \textit{sample} stays constant but differs for different \textit{dilut}.
+	
+	\section{Exercise 2}
+	\subsection{}
+	Step performed as in the example on p. 214–221 of Pinheiro \& Bates
+	\subsubsection*{fm2Dial.lme}
+	\begin{lstlisting}[language=R]
+lme(rate ~(pressure + I(pressure^2) +
+           I(pressure^3) + I(pressure^4))*QB,
+random = ~ pressure + I(pressure^2) | Subject,
+weights = varPower(form = ~ pressure) , data = Dialyzer.df)
+	\end{lstlisting}
+	
+	\subsection{}
+	Residual variance for pressure = 2 dmHg and flow rate = 200 dl/min:\\[1em]
+	$\text{varPower : }Var\left(\epsilon_{ij}\right) \quad=\quad \sigma^2 |v_{ij}|^{2\delta} \quad\tilde{=}\quad 4.5$\\[1em]
+	With: $\sigma^2 = 1.26^2$, $v_{ij} = 2$ (pressure), and $\delta = 0.749$\\[1em]
+	
+	NB: in the book, \textit{fm3Dial.lme} allows for different variance according to the flow rate which is not the case for \textit{fm2Dial.lme}.
+	
+	\subsection{}
+	\subsubsection*{fm4Dial.lme}
+	\begin{lstlisting}[language=R]
+lme(rate ~(pressure + I(pressure^2) +
+           I(pressure^3) + I(pressure^4))*QB,
+random = ~ pressure + I(pressure^2) | Subject,
+weights = varExp(form = ~ pressure) , data = Dialyzer.df)
+	\end{lstlisting}
+
+	\section{Exercise 3}
+	
+	
+	\section{Exercise 4}
+
+	
+	
+	
+\end{document}
