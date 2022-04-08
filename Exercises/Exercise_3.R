@@ -101,15 +101,54 @@ Oats.lme5 <- lme(yield ~ nitro, random = ~1|Block, corr = corSymm(form = ~1|Bloc
 intervals(Oats.lme5)
 # All intervals overlap & similar magnitude -> compound symmetry structure suggested
 Oats.lme6 <- lme(yield ~ nitro, random = ~1|Block, corr = corCompSymm(form = ~1|Block/Variety), data=Oats.df)
-anova(Oats.lme6,Oats.lme5) # -> p=0.7: corCompSymm is better (less degrees of freedom)
+anova(Oats.lme5,Oats.lme6) # -> p=0.7: corCompSymm is better (less degrees of freedom)
 
 # (c)
 Oats.lme4 <- lme(yield ~ nitro, random = ~1|Block/Variety, data=Oats.df)
 anova(Oats.lme6,Oats.lme4)
 
+S1 <- 14.506
+S.lme4 <- 12.867
+S2.lme4 <- 11.005
+S.lme6 <- 16.931
+Corr <- 0.422
+
+print(S.lme6^2)
+print(S2.lme4^2 + S.lme4^2)
+print(S2.lme4^2 / (S2.lme4^2 + S.lme4^2))
+print(Corr)
+
+# (d)
+Oats.gls1 <- gls(yield ~ nitro, correlation = corCompSymm(form = ~1 | Block/Variety), data=Oats.df)
+anova(Oats.lme6,Oats.gls1)
 
 
+# Exercise 4 (correspond to exercise 1 P267 of the book)
+BodyWeight.df <- data.frame(BodyWeight)
+fm1BW.lme1 <- lme( weight ~ Time * Diet, random = ~ Time | Rat, data = BodyWeight.df)
+
+# (a)
+plot(fm1BW.lme, resid(.) ~ as.integer(Diet), abline = 0)
+
+# (b)
+fm1BW.lme2 <- lme( weight ~ Time * Diet, random = ~ Time | Rat, weights = varIdent(form = ~1|Diet), contrasts = contr.helmert, data = BodyWeight.df)
+plot(fm2BW.lme, resid(.) ~ as.integer(Diet), abline = 0)
+intervals(fm2BW.lme)
+
+# (c)
+fm2BW.lme <- lme( weight ~ Time * Diet, random = ~ Time | Rat, weights = varPower(), data = BodyWeight.df)
+anova(fm1BW.lme1, fm1BW.lme2)
+anova(fm2BW.lme, fm1BW.lme2)
 
 
+# (d)
+fm3BW.lme <- lme( weight ~ Time * Diet, random = ~ Time | Rat, weights = varPower(), corr = corExp(form = ~ Time), data = BodyWeight.df)
+fm3BW.gls <- gls( weight ~ Time * Diet, weights = varPower(), corr = corCAR1(form = ~ Time | Rat), data = BodyWeight.df)
+anova(fm3BW.lme,fm3BW.gls)
 
+# Non-nested models example
+Orthodont.df <- data.frame(Orthodont)
+fm4Orth.gls <- gls( distance ~ Sex * I(age - 11), weights = varIdent(form = ~ 1 | Sex), corr = corCompSymm(form = ~ 1 | Subject), data =  Orthodont.df)
+fm3Orth.lme <- lme(distance ~ Sex * I(age-11), random = ~ I(age - 11) | Subject, weights = varIdent(form = ~ 1 | Sex), data =  Orthodont.df )
+anova(fm3Orth.lme,fm4Orth.gls)
 

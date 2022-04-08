@@ -6,6 +6,8 @@
 \usepackage{xcolor}
 \usepackage{listings}
 \usepackage{ragged2e}
+\usepackage{pifont}
+
 
 
 \renewcommand*{\thesection}{\hspace{-5mm}}
@@ -110,11 +112,124 @@ weights = varExp(form = ~ pressure) , data = Dialyzer.df)
 	\end{lstlisting}
 
 	\section{Exercise 3}
+	\subsection{}
+	\subsubsection*{Oats.lme5}
+	\begin{lstlisting}[language=R]
+lme(yield ~ nitro, random = ~1|Block,
+    corr = corSymm(form = ~1|Block/Variety), data=Oats.df)
+	\end{lstlisting}
 	
+	\newpage
+	\subsection{}
+	\subsubsection*{intervals(Oats.lme5)}
+	\begin{lstlisting}[language=R]
+Correlation structure:
+             lower      est.     upper
+cor(1,2) -0.04975240 0.4503464 0.7698921
+cor(1,3) -0.28284208 0.2501623 0.6651202
+cor(1,4) -0.04795947 0.4457068 0.7643755
+cor(2,3) -0.16370072 0.3096073 0.6670499
+cor(2,4)  0.27208984 0.6330247 0.8378083
+cor(3,4) -0.02484203 0.4082015 0.7122568
+	\end{lstlisting}
 	
+	\subsubsection*{Oats.lme6}
+	\begin{lstlisting}[language=R]
+lme(yield ~ nitro, random = ~1|Block,
+corr = corCompSymm(form = ~1|Block/Variety), data=Oats.df)
+	\end{lstlisting}
+	
+	\subsubsection*{anova(Oats.lme5,Oats.lme6)}
+	\begin{lstlisting}[language=R]
+Model df    AIC    BIC  logLik  Test L.Ratio p-value
+    1 10 610.18 632.66 -295.09                        
+    2  5 603.04 614.28 -296.52  1vs2   2.856   0.722
+	\end{lstlisting}
+	
+	\newpage
+	\subsection{}
+	\subsubsection*{Oats.lme4}
+	\begin{lstlisting}[language=R]
+Log-restricted-likelihood: -296.52
+
+Fixed: yield ~ nitro
+(Intercept)   nitro 
+  81.8722    73.6666
+
+Random effects:
+Formula: ~1 | Block
+         (Intercept)
+StdDev:    14.5059
+
+Formula: ~1 | Variety %in% Block
+         (Intercept) Residual
+StdDev:    11.0046   12.86696
+	\end{lstlisting}
+	
+	\subsubsection*{Oats.lme6}
+	\begin{lstlisting}[language=R]
+Log-restricted-likelihood: -296.52
+
+Fixed: yield ~ nitro
+(Intercept)   nitro 
+  81.8722    73.6666
+
+Random effects:
+Formula: ~1 | Block
+         (Intercept) Residual
+StdDev:    14.5059   16.93109
+
+Correlation Structure: Compound symmetry
+Formula: ~1 | Block/Variety 
+Parameter estimate(s):
+   Rho 
+0.4224608
+	\end{lstlisting}
+	
+	\newpage
+	Verifications:\\[1em]
+	$ 16.931^2 \quad\tilde{=}\quad 11.005^2 + 12.867^2 $ \ding{51}\\
+	$ 0.422 \quad\tilde{=}\quad 11.005^2 / (11.005^2 + 12.867^2) $ \ding{51}
+	
+	\subsection{}
+	\subsubsection*{Oats.gls1}
+	\begin{lstlisting}[language=R]
+gls(yield ~ nitro,
+correlation = corCompSymm(form = ~1 | Block/Variety),
+data=Oats.df)
+	\end{lstlisting}
+	
+	\subsubsection*{anova(Oats.lme6,Oats.gls1)}
+	\begin{lstlisting}[language=R]
+Model df  AIC    BIC    logLik  Test L.Ratio p-value
+    1  5 603.04 614.28 -296.52                        
+    2  4 606.06 615.05 -299.03  1vs2  5.023   0.025
+	\end{lstlisting}
+	The \textit{Block effect} seems to be significant as the \textit{p-value} is lower than 0.05.
+	
+	\newpage
 	\section{Exercise 4}
 
+	\subsubsection*{fm3BW.lme}
+	\begin{lstlisting}[language=R]
+lme( weight ~ Time * Diet, random = ~ Time | Rat,
+weights = varPower(), corr = corExp(form = ~ Time),
+data = BodyWeight.df)
+	\end{lstlisting}
 	
+	\subsubsection*{fm3BW.gls}
+	\begin{lstlisting}[language=R]
+gls( weight ~ Time * Diet, weights = varPower(),
+corr = corCAR1(form = ~ Time | Rat), data = BodyWeight.df)
+	\end{lstlisting}
+
+	\subsubsection*{anova(fm3BW.lme,fm3BW.gls)}
+	\begin{lstlisting}[language=R]
+Model df  AIC    BIC    logLik  Test L.Ratio p-value
+    1 12 1145.1 1182.8 -560.570                        
+    2  9 1147.7 1175.9 -564.843 1vs2  8.546   0.036
+	\end{lstlisting}
+	According to the AIC value the more general model (\textit{fm3BW.lme}) seems to be more appropriate but the BIC value indicate the opposite. The two models are not nested because, even if they have the same fixed effects, they are not fitted the same way. This is was we can not use the p-value (cannot perform L ratio test) to compare the models.
 	
 	
 \end{document}
