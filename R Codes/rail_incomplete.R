@@ -75,3 +75,20 @@ solve(t(Z) %*% Z + sigma.hat^2 * solve(G.hat)) %*% t(Z) %*% (rail.df$travel - X 
 library(lme4)
 ranef(rail.lmer)
 detach(package:lme4)
+
+
+
+# gls
+
+rail.gls.1 <- gls(travel ~ 1, correlation = corCompSymm(form = ~ 1 | Rail), data=rail.df)
+summary(rail.gls.1)
+
+rail.gls.2 <- gls(travel ~ 1, correlation = corSymm(form = ~ 1 | Rail), data=rail.df)
+summary(rail.gls.2)
+
+anova(rail.gls.1, rail.gls.2)
+
+plot(as.numeric(levels(rail.df$Rail))[rail.df$Rail], rail.df$travel, ylim=c(20, 100), xlab='Rail', ylab='travel', pch=rep(c('A', 'B', 'C'), 6))
+abline(h=rail.gls.2$coefficients)
+
+residuals(rail.gls.2)
