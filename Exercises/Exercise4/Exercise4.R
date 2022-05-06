@@ -124,4 +124,23 @@ Ovary.nlme.1 <- nlme(follicles ~ A + B * sin(2 * pi * w * Time) + C * cos(2 * pi
                     data = Ovary.df, fixed = A + B + C + w ~ 1, random = list(Mare = pdDiag(A + B + w ~ 1)),
                     start = c(fixef(Ovary.lme), 1))
 
-## Continue from page 397 (408 in pdf)
+# Inspect for autocorrelation
+plot( ACF(Ovary.nlme.1, maxLag = 10), alpha = 0.05 )
+
+# Build models with correlation structure determined from ACF
+Ovary.nlme.2 <- nlme(follicles ~ A + B * sin(2 * pi * w * Time) + C * cos(2 * pi * w *Time),
+                    data = Ovary.df, fixed = A + B + C + w ~ 1, random = list(Mare = pdDiag(A + B + w ~ 1)),
+                    start = c(fixef(Ovary.lme), 1), corr = corAR1(0.311))
+Ovary.nlme.3 <- nlme(follicles ~ A + B * sin(2 * pi * w * Time) + C * cos(2 * pi * w *Time),
+                    data = Ovary.df, fixed = A + B + C + w ~ 1, random = list(Mare = pdDiag(A + B + w ~ 1)),
+                    start = c(fixef(Ovary.lme), 1), corr = corARMA(p=0, q=2))
+
+# Compare models with appropriate test
+anova(Ovary.nlme.2, Ovary.nlme.3, test = F)
+
+# Compute 95% confidence intervals
+intervals(Ovary.nlme.2, which = 'fixed')
+
+
+
+## Continue from page 398 (410 in pdf)
