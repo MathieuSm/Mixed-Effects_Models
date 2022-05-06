@@ -81,9 +81,15 @@ abline(h=0, lty='dotted')
 library(car)
 qqPlot(residuals(Theoph.nlme.2))
 
+# Random effect assumptions
+qqPlot(ranef(Theoph.nlme.2))
+boxplot(ranef(Theoph.nlme.2), xlab='Subject number', ylab = 'Random effect')
+
+
 # i)
 Theoph.nlme.3 <- nlme(Theoph.nlsList.1, random = list(Subject = pdDiag(lKa + lCl ~ 1)),
                       weights = varConstPower(form = ~ fitted(.), const = 1, power = 0.5))
+anova(Theoph.nlme.2, Theoph.nlme.3)
 
 # j) see latex
 
@@ -95,7 +101,7 @@ Pixel.df$Dog <- factor(as.numeric(levels(Pixel.df$Dog))[Pixel.df$Dog], ordered =
 ggplot(Pixel.df,aes(x=day,y=pixel,color=Dog)) + geom_point()
 
 # b)
-Pixel.nls.1 <- nls(pixel ~ c + a * (b*day)^3 / (exp(b*day) - 0.999), start = c(a=-35 , b=1, c=1000), data=Pixel.df)
+Pixel.nls.1 <- nls(pixel ~ c + a * (b*day)^3 / (exp(b*day) - 0.999), start = c(a=-35 , b=2, c=1000), data=Pixel.df)
 
 # c)
 Pixel.nlsList.1 <- nlsList(pixel ~ c + a * (b*day)^3 / (exp(b*day) - 0.999) | Dog/Side,
@@ -141,6 +147,41 @@ anova(Ovary.nlme.2, Ovary.nlme.3, test = F)
 # Compute 95% confidence intervals
 intervals(Ovary.nlme.2, which = 'fixed')
 
+# Test if 2 variance components can be dropped
+Ovary.nlme.4 <- nlme(follicles ~ A + B * sin(2 * pi * w * Time) + C * cos(2 * pi * w *Time),
+                    data = Ovary.df, fixed = A + B + C + w ~ 1, random = list(Mare = pdDiag(A ~ 1)),
+                    start = c(fixef(Ovary.lme), 1), corr = corAR1(0.311))
 
+anova(Ovary.nlme.2, Ovary.nlme.4)
 
-## Continue from page 398 (410 in pdf)
+# Test if correlation structure can be simplified
+Ovary.nlme.5 <- nlme(follicles ~ A + B * sin(2 * pi * w * Time) + C * cos(2 * pi * w *Time),
+                    data = Ovary.df, fixed = A + B + C + w ~ 1, random = list(Mare = pdDiag(A ~ 1)),
+                    start = c(fixef(Ovary.lme), 1), corr = corARMA(p=1, q=1))
+
+anova(Ovary.nlme.4, Ovary.nlme.5)
+
+plot( ACF(Ovary.nlme.5, maxLag = 10, resType = 'n'), alpha = 0.05 )
+
+# Compare nlme with its lme version (fitted with maximum likelihood !)
+Ovary.lmeML <- update(Ovary.lme, method = 'ML')
+intervals(Ovary.lmeML)
+
+# After looking at intervals, verify is 1 random effect can be dropped
+Ovary.lmeML2 <- update(Ovary.lmeML, random = ~ 1 | Mare)
+anova(Ovary.lmeML, Ovary.lmeML2)
+
+# Ovary.lmeML2 is a special case of Ovary.nlme.5, verify w == 1 assumption
+anova(Ovary.lmeML2, Ovary.nlme.5)
+
+# No significant evidence against w == 1, confirmed by intervals
+intervals(Ovary.nlme.5)
+
+# Try one additional way to test if w is different from 1
+Ovary.nlme.6 <- nlme(follicles ~ A + B * sin(2 * pi * Time) + C * cos(2 * pi * Time),
+                    data = Ovary.df, fixed = A + B + C ~ 1, random = list(Mare = pdDiag(A ~ 1)),
+                    start = fixef(Ovary.lme))
+
+anova(Ovary.nlme.6, Ovary.nlme.5)
+
+corMatrix( initialize( corARMA(form = ~1 | Mare, p=1, q=1), data = Ovary.df ))

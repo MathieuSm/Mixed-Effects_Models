@@ -1,0 +1,355 @@
+\documentclass[a4paper,12pt]{article}
+
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{ragged2e}
+\usepackage{pifont}
+
+
+
+\renewcommand*{\thesection}{\hspace{-5mm}}
+\renewcommand*{\thesubsection}{(\alph{subsection})}
+
+\setlength{\parindent}{0em}
+
+\definecolor{Red}{RGB}{255, 0, 0}
+\definecolor{Blue}{RGB}{0, 0, 255}
+
+\begin{document}
+	
+	\title{Mixed-Effects Models, Spring 2022}
+	\author{Mathieu Simon}
+	\maketitle
+	
+	\setlength{\parskip}{1em}
+	
+	\section{Exercise 1}
+	
+	\subsection{}
+	
+	A suitable function could be the \textit{First-Order Compartment Model}
+	\begin{figure}[h!]
+		\centering
+		\includegraphics[width=0.75\linewidth]{E1_P1}
+	\end{figure}
+
+	\newpage
+	\subsection{}
+	
+	\subsubsection*{Theoph.nls.1}
+	\begin{lstlisting}[language=R]
+nls(conc ~ SSfol(Dose, Time, lKe, lKa, lCl), data=Theoph.df)
+	\end{lstlisting}
+	
+	\subsection{}
+
+	\subsubsection*{Theoph.nlsList.1}
+	\begin{lstlisting}[language=R]
+nlsList(conc ~ SSfol(Dose, Time, lKe, lKa, lCl) | Subject,
+data=Theoph.df)
+	\end{lstlisting}
+	
+	\subsection{}
+
+	\subsubsection*{Theoph.nlme.1}
+	\begin{lstlisting}[language=R]
+nlme(Theoph.nlsList.1, random = lKa + lCl ~ 1 | Subject)
+	\end{lstlisting}
+	
+	\subsection{}
+	\begin{equation*}
+		\boldsymbol{y}_i = \boldsymbol{f}_i\left(\boldsymbol{\phi}_i,\boldsymbol{v}_i\right) + \boldsymbol{\epsilon}_i \qquad \text{with} \qquad \boldsymbol{\phi}_i = \boldsymbol{A}_i \boldsymbol{\beta} + \boldsymbol{B}_i \boldsymbol{b}_i
+	\end{equation*}
+	Where
+	\begin{equation*}
+		\boldsymbol{\phi}_i = \begin{bmatrix}
+		\phi_{1i} \\
+		\phi_{2i} \\
+		\phi_{3i} \\
+		\end{bmatrix}
+		\qquad
+		\boldsymbol{A}_i = \begin{bmatrix}
+		1 & 0 & 0 \\
+		0 & 1 & 0 \\
+		0 & 0 & 1 \\
+		\end{bmatrix}
+		\qquad
+		\boldsymbol{\beta} = \begin{bmatrix}
+		lKe \\
+		lKa \\
+		lCl \\
+		\end{bmatrix}
+		\qquad
+		\boldsymbol{B}_i = \begin{bmatrix}
+		0 & 0 \\
+		1 & 0 \\
+		0 & 1 \\
+		\end{bmatrix}
+		\qquad
+		\boldsymbol{b}_i = \begin{bmatrix}
+		lKa \\
+		lCl \\
+		\end{bmatrix}
+	\end{equation*}
+	And
+	\begin{equation*}
+		\boldsymbol{b}_i \sim \mathcal{N}\left(\boldsymbol{0}, \begin{bmatrix}
+		\psi_{11} & \psi_{12} \\
+		\psi_{21} & \psi_{22} \\
+		\end{bmatrix}\right),
+		\qquad
+		\epsilon_{i} \sim \mathcal{N}\left(\boldsymbol{0}, \sigma^2\right)
+	\end{equation*}
+	With
+	\begin{equation*}
+		\psi_{21} = \psi_{12}
+	\end{equation*}
+	
+	
+	\newpage
+	\subsection{}
+	\begin{equation*}
+		\boldsymbol{\Psi} = \begin{bmatrix}
+		0.414 & 2.15\text{e}-4 \\
+		2.15\text{e}-4 & 0.028 \\
+		\end{bmatrix},
+		\qquad
+		\sigma^2 = 0.503
+	\end{equation*}
+	
+	\subsection{}
+	\subsubsection*{Theoph.nlme.2}
+	\begin{lstlisting}
+nlme(Theoph.nlsList.1,
+     random = list(Subject = pdDiag(lKa + lCl ~ 1)))
+	\end{lstlisting}
+	Models comparison
+	\begin{lstlisting}
+anova(Theoph.nlme.1, Theoph.nlme.2, type='marginal')
+
+Model df  AIC  BIC    logLik   Test   L.Ratio  p-value
+  1    7  368  388  -177.023                           
+  2    6  366  383  -177.021  1 vs 2  0.00318   0.955
+	\end{lstlisting}
+	The two models result in similar fit quality, thus the simpler model (Theoph.nlme.2) is preferred. This make sense as the correlations between lKa and lCl are very low (2.15e-4).
+	
+	\newpage
+	\subsection{}
+	Residuals
+	\begin{figure}[h!]
+		\includegraphics[width=0.45\linewidth]{E1_P2}
+		\includegraphics[width=0.45\linewidth]{E1_P4}
+	\end{figure}
+	
+	\begin{figure}[h!]
+		\includegraphics[width=0.45\linewidth]{E1_P3}
+		\includegraphics[width=0.45\linewidth]{E1_P7}
+	\end{figure}
+
+	\begin{figure}[h!]
+		\includegraphics[width=0.45\linewidth]{E1_P5}
+		\includegraphics[width=0.45\linewidth]{E1_P6}
+	\end{figure}
+
+	\newpage
+	Random effects
+	\begin{figure}[h!]
+		\includegraphics[width=0.45\linewidth]{E1_P8}
+		\includegraphics[width=0.45\linewidth]{E1_P9}
+	\end{figure}
+	
+	The assumptions of the random effects seem to be respected (normally distributed with zero mean) but not for the residuals. If we look at the resiudals agains the fitted values nothing special arise but the plots of the residuals by subject number highlight doubts about the zero mean assumption. Moreover, the quantile-quantile plot with 95\% confidence interval shows a deviance from the normality assumption. Finally examination of the residuals against time suggest a slight dependence.
+	
+	\subsection{}
+	\subsubsection*{Theoph.nlme.3}
+	
+	\begin{lstlisting}[language=R]
+nlme(Theoph.nlsList.1,
+     random = list(Subject = pdDiag(lKa + lCl ~ 1)),
+     weights = varConstPower(form = ~ fitted(.),
+     const = 1, power = 0.5))
+     
+anova(Theoph.nlme.2, Theoph.nlme.3)
+Model  df  AIC  BIC   logLik   Test  L.Ratio  p-value
+  1     6  366  383  -177.02                        
+  2     8  351  374  -167.67  1 vs 2  18.69    1e-04
+	\end{lstlisting}
+	
+	\subsection{}
+	\begin{equation*}
+	\boldsymbol{y}_i = \boldsymbol{f}_i\left(\boldsymbol{\phi}_i,\boldsymbol{v}_i\right) + \boldsymbol{\epsilon}_i \qquad \text{with} \qquad \boldsymbol{\phi}_i = \boldsymbol{A}_i \boldsymbol{\beta} + \boldsymbol{B}_i \boldsymbol{b}_i
+	\end{equation*}
+	Where
+	\begin{equation*}
+	\boldsymbol{\phi}_i = \begin{bmatrix}
+	\phi_{1i} \\
+	\phi_{2i} \\
+	\phi_{3i} \\
+	\end{bmatrix}
+	\qquad
+	\boldsymbol{A}_i = \begin{bmatrix}
+	1 & 0 & 0 \\
+	0 & 1 & 0 \\
+	0 & 0 & 1 \\
+	\end{bmatrix}
+	\qquad
+	\boldsymbol{\beta} = \begin{bmatrix}
+	lKe \\
+	lKa \\
+	lCl \\
+	\end{bmatrix}
+	\qquad
+	\boldsymbol{B}_i = \begin{bmatrix}
+	0 & 0 \\
+	1 & 0 \\
+	0 & 1 \\
+	\end{bmatrix}
+	\qquad
+	\boldsymbol{b}_i = \begin{bmatrix}
+	lKa \\
+	lCl \\
+	\end{bmatrix}
+	\end{equation*}
+	And
+	\begin{equation*}
+	\boldsymbol{b}_i \sim \mathcal{N}\left(\boldsymbol{0}, \begin{bmatrix}
+	\psi_{11} & \textcolor{blue}{0} \\
+	\textcolor{blue}{0} & \psi_{22} \\
+	\end{bmatrix}\right),
+	\qquad
+	\epsilon_{i} \sim \mathcal{N}\left(\boldsymbol{0}, \sigma^2 \textcolor{blue}{\boldsymbol{\Lambda}_i}\right)
+	\end{equation*}
+	With
+	\begin{equation*}
+	\boldsymbol{\Lambda}_i = \boldsymbol{W}_i \boldsymbol{C}_i \boldsymbol{W}_i\quad\text{,} \qquad\boldsymbol{C}_i = \boldsymbol{I}_3 \qquad \text{and} \qquad \boldsymbol{W}_i^2 = \sigma^2 \left(\delta_1 + \text{abs}(v_i)^{\delta_2}\right)^2
+	\end{equation*}
+	
+	\section{Exercise 2}
+	
+	\subsection{}
+	\textit{a} scales the curve height, \textit{b} scales the curve width and \textit{c} is the offset.
+	\begin{figure}[h!]
+		\centering
+		\includegraphics[width=0.75\linewidth]{E2_P1}
+	\end{figure}
+
+	\subsection{}
+	\subsubsection*{Pixel.nls.1}
+	\begin{lstlisting}[language=R]
+nls(pixel ~ c + a * (b*day)^3 / (exp(b*day) - 0.999),
+    start = c(a=-35 , b=2, c=1000), data=Pixel.df)
+	\end{lstlisting}
+	
+	\subsection{}
+	\subsubsection*{Pixel.nlme.1}
+	\begin{lstlisting}[language=R]
+nlme(pixel ~ c + a * (b*day)^3 / (exp(b*day) - 0.999),
+     start = c(a=26 , b=0.41, c=1068),
+     fixed = a + b + c ~ 1,
+     random = a + c ~ 1 | Dog/Side, data=Pixel.df,
+     control = list(msMaxIter=1000, eval.max=1000))
+	\end{lstlisting}
+	
+	\subsection{}
+	\subsubsection*{Pixel.nlme.2}
+	\begin{lstlisting}[language=R]
+nlme(pixel ~ c + a * (b*day)^3 / (exp(b*day) - 0.999),
+start = c(a=26 , b=0.41, c=1068), data=Pixel.df,
+fixed = a + b + c ~ 1,
+random = list(Dog = a + b + c ~ 1, Side = a + c ~ 1),
+control = list(msMaxIter=1000, eval.max=1000))
+	\end{lstlisting}
+	
+	\newpage
+	\section{Exercise 3}
+	
+	\subsection{}
+	Step reproduced until test for w $\neq$ 1
+	
+	\subsubsection*{Ovary.lme}
+	\begin{lstlisting}[language=R]
+lme(follicles ~ sin(2*pi*Time) + cos(2*pi*Time),
+    data = Ovary.df, , method = 'ML',
+    random = ~ 1 | Mare,
+    corr = corARMA(p = 1, q = 1))
+	\end{lstlisting}
+	
+	\subsubsection*{Ovary.nlme}
+	\begin{lstlisting}[language=R]
+nlme(follicles ~ 
+     A + B * sin(2 * pi * w * Time) + C * cos(2 * pi * w *Time),
+     data = Ovary.df, fixed = A + B + C + w ~ 1,
+     random = list(Mare = pdDiag(A ~ 1)),
+     start = c(fixef(Ovary.lme), 1),
+     corr = corARMA(p=1, q=1))
+	\end{lstlisting}
+	
+	Models comparison
+	\begin{lstlisting}[language=R]
+anova(Ovary.lme, Ovary.nlme)
+Model  df   AIC   BIC   logLik   Test   L.Ratio  p-value
+  1     7  1561  1587  -773.51                         
+  2     8  1562  1591  -773.07  1 vs 2  0.87888   0.349
+	\end{lstlisting}
+	
+	Or looking at 95\% interval, which comprises 1
+	\begin{lstlisting}[language=R]
+intervals(Ovary.nlme)
+         ...
+    lower     est.     upper
+w  0.81577  0.93136  1.046946
+	\end{lstlisting}
+	
+	\newpage
+	\subsection{}
+	\begin{equation*}
+		\boldsymbol{y}_i = \boldsymbol{f}_i\left(\boldsymbol{\phi}_i,\boldsymbol{v}_i\right) + \boldsymbol{\epsilon}_i \qquad \text{with} \qquad \boldsymbol{\phi}_i = \boldsymbol{A}_i \boldsymbol{\beta} + \boldsymbol{B}_i \boldsymbol{b}_i
+	\end{equation*}
+	Where
+	\begin{equation*}
+		\boldsymbol{\phi}_i = \begin{bmatrix}
+		\phi_{1i} \\
+		\phi_{2i} \\
+		\phi_{3i} \\
+		\phi_{4i} \\
+		\end{bmatrix}
+		\qquad
+		\boldsymbol{A}_i = \begin{bmatrix}
+		1 & 0 & 0 & 0 \\
+		0 & 1 & 0 & 0 \\
+		0 & 0 & 1 & 0 \\
+		0 & 0 & 0 & 1 \\
+		\end{bmatrix}
+		\qquad
+		\boldsymbol{\beta} = \begin{bmatrix}
+		A \\
+		B \\
+		C \\
+		w \\
+		\end{bmatrix}
+		\qquad
+		\boldsymbol{B}_i = \begin{bmatrix}
+		1 \\
+		0 \\
+		0 \\
+		0 \\
+		\end{bmatrix}
+		\qquad
+		\boldsymbol{b}_i = \begin{bmatrix}
+		A \\
+		\end{bmatrix}
+	\end{equation*}
+	And
+	\begin{equation*}
+		\boldsymbol{b}_i \sim \mathcal{N}\left(\boldsymbol{0}, 
+		\Psi \\\right),
+		\qquad
+		\epsilon_{i} \sim \mathcal{N}\left(\boldsymbol{0}, \sigma^2 \boldsymbol{\Lambda}_i\right)
+	\end{equation*}
+	
+	One could try to reformulate the nlme model without the parameter \textit{w} and compare the two models using anova.
+	
+\end{document}
