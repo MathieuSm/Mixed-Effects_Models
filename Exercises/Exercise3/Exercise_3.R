@@ -80,6 +80,7 @@ plot(augPred(fm2Dial.lme, primary = ~ pressure), grid = T)
 
 # To understand, redo example 2.22
 Orthodont.df <- data.frame(Orthodont)
+write.csv(Orthodont.df,"C:\\Users\\mathi\\OneDrive\\Documents\\PhD\\03_Lectures\\Mixed-Effects Models\\Exercises\\Ortho.csv", row.names = FALSE)
 ortho.lme.3 <- lme(distance ~ Sex * I(age-11), random = ~ I(age-11) | Subject, weights = varPower(form = ~ age|Sex), data=Orthodont.df)
 summary(ortho.lme.3)
 
