@@ -5,6 +5,8 @@ library(ggplot2)
 Theoph.df <- data.frame(Theoph)
 Theoph.df$Subject <- factor(as.numeric(as.character(Theoph.df$Subject)), ordered = FALSE)
 
+write.csv(Theoph.df,"C:\\Users\\mathi\\OneDrive\\Documents\\PhD\\03_Lectures\\Mixed-Effects Models\\Exercises\\Teoph.csv", row.names = FALSE)
+
 # a)
 plot(Theoph.df$Time, Theoph.df$conc, xlab='Time [hours]', ylab='Concentration [mg/l]')
 
@@ -95,7 +97,7 @@ anova(Theoph.nlme.2, Theoph.nlme.3)
 
 
 
-# Exerercise 2
+# Exercise 2
 Pixel.df <- data.frame(Pixel)
 Pixel.df$Dog <- factor(as.numeric(levels(Pixel.df$Dog))[Pixel.df$Dog], ordered = FALSE)
 ggplot(Pixel.df,aes(x=day,y=pixel,color=Dog)) + geom_point()
